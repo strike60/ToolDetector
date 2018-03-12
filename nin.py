@@ -209,24 +209,24 @@ def NinMain(flags, model_function, input_function):
             'train_accuracy': 'train_accuracy'
         }
 
-    logging_hook = tf.train.LoggingTensorHook(
-        tensors=tensors_to_log, every_n_iter=100)
+        logging_hook = tf.train.LoggingTensorHook(
+            tensors=tensors_to_log, every_n_iter=100)
 
-    print('Starting a training cycle.')
+        print('Starting a training cycle.')
 
-    def input_fn_train():
-        return input_function(True, flags.data_dir, flags.batch_size,
-                              flags.epochs_per_eval, flags.num_parallel_calls)
+        def input_fn_train():
+            return input_function(True, flags.data_dir, flags.batch_size,
+                                  flags.epochs_per_eval, flags.num_parallel_calls)
 
-    classifier.train(input_fn=input_fn_train, hooks=[logging_hook])
+        classifier.train(input_fn=input_fn_train, hooks=[logging_hook])
 
-    print('Starting to evaluate.')
+        print('Starting to evaluate.')
 
-    def input_fn_eval():
-        return input_function(False, flags.data_dir, flags.batch_size,
-                              1, flags.num_parallel_calls)
-    eval_results = classifier.evaluate(input_fn=input_fn_eval)
-    print(eval_results)
+        def input_fn_eval():
+            return input_function(False, flags.data_dir, flags.batch_size,
+                                  1, flags.num_parallel_calls)
+        eval_results = classifier.evaluate(input_fn=input_fn_eval)
+        print(eval_results)
 
 
 class NinArgParser(argparse.ArgumentParser):

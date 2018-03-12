@@ -83,7 +83,7 @@ def Cifar10ModelFunction(features, labels, mode, params):
     learning_rate_fn = nin.LearningRateWithDecay(batch_size=params['batch_size'], batch_denom=128,
                                                  num_images=_NUM_IMAGES['train'], boundary_epochs=[
                                                      100, 150, 200],
-                                                 decay_rates=[1, 0.1, 0.01, 0.001])
+                                                 decay_rates=[1, 0.001, 0.0001, 0.00001])
 
     weight_decay = 2e-4
 
@@ -119,9 +119,9 @@ if __name__ == '__main__':
     parser = nin.NinArgParser()
     parser.set_defaults(data_dir='./Dataset',
                         model_dir='./cifar10_model',
-                        train_epochs=250,
+                        train_epochs=2500,
                         epochs_per_eval=10,
-                        batch_size=128)
+                        batch_size=16)
 
     FLAGS, unparsed = parser.parse_known_args()
     tf.app.run(argv=[sys.argv[0]]+unparsed)
